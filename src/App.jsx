@@ -11,15 +11,18 @@ function App() {
   const[guessedwords,setguessedwords] = useState([])
   const[hintIndex, setHintIndex] = useState([]) // Add this line
   const[newgame,setnewgame] = useState(false)
-  const gameLost = wrongArr.length == languages.length -1
-  const gameOver = gameLost || isGamewon;
-  const  lastGuessedLetter = guessedwords[guessedwords.length -1]
-  const lastGuessedLetterIncorrect = lastGuessedLetter && !word.toUpperCase().includes(lastGuessedLetter)
+  
   const isGamewon = word.length > 0 && word.toUpperCase().split("").map((letter)=>(guessedwords.includes(letter)
   )).every(isGuessed => isGuessed === true)
-  const wrongArr =  guessedwords.filter(wrd=>(
+  
+  const wrongArr = guessedwords.filter(wrd=>(
       !word.toUpperCase().split("").includes(wrd)
   ))
+  
+  const gameLost = wrongArr.length == languages.length -1
+  const gameOver = gameLost || isGamewon;
+  const lastGuessedLetter = guessedwords[guessedwords.length -1]
+  const lastGuessedLetterIncorrect = lastGuessedLetter && !word.toUpperCase().includes(lastGuessedLetter)
 
    useEffect(()=>{
      const randomno = Math.floor(Math.random() * 4) + 4;
