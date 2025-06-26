@@ -1,5 +1,5 @@
 :root {
-  font-family: "Hanken Grotesk", sans-serif;;
+  font-family: "Hanken Grotesk", sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
@@ -13,17 +13,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  min-height: 100vh; /* Ensure root takes full viewport height */
 }
-
-
 
 body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  min-width: 100%; /* Changed from 320px to 100% for better mobile adaptability */
   max-width: 520px;
   min-height: 100vh;
+  padding: 1rem; /* Add some padding to the body for smaller screens */
+  box-sizing: border-box; /* Include padding in element's total width and height */
+  flex-direction: column; /* Ensure body content stacks on smaller screens */
 }
 
 h1 {
@@ -31,17 +33,20 @@ h1 {
   color: #F9F4DA;
   margin: 0;
   margin-bottom: 0.5rem;
+  text-align: center; /* Center align headings */
 }
 
-header >p{
+header > p {
   color: #8E8E8E;
   margin: 0;
+  text-align: center; /* Center align header paragraph */
 }
 
-.gamestatus{
-  width: 350px;
+.gamestatus {
+  width: 90%; /* Use percentage for width */
+  max-width: 350px; /* Set a max-width to prevent it from getting too wide on larger screens */
   margin: 0 auto;
-  height: 50px;
+  height: auto; /* Let height adjust based on content */
   margin-top: 1.5rem;
   padding: 0.8rem;
   border-radius: 4px;
@@ -49,32 +54,34 @@ header >p{
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  text-align: center; /* Center align text inside gamestatus */
 }
 
-.gamestatus >h2{
+.gamestatus > h2 {
   color: #F9F4DA;
   font-size: 1.3rem;
   margin: 0;
   font-weight: 400;
 }
-.gamestatus >p{
+
+.gamestatus > p {
   color: #F9F4DA;
   margin: 0;
   font-weight: 500;
 }
 
-.wordchips{
+.wordchips {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   gap: 5px;
-  max-width: 300px;
+  max-width: 90%; /* Use percentage for max-width */
   margin: 0 auto;
   margin-top: 2.5rem;
 }
 
-  span.chip{
+span.chip {
   font-weight: 600;
   padding: 0.2rem;
   border-radius: 4px;
@@ -82,19 +89,22 @@ header >p{
   position: relative;
 }
 
-.displayword > p{
+.displayword > p {
   background-color: #323232;
   color: #F9F4DA;
   display: inline-block;
-  padding: 0.6rem 1rem;
+  padding: 0.6rem 0.5rem; /* Adjusted padding for smaller screens */
   border-bottom: 2px solid #F9F4DA;
   margin-right: 0.2rem;
-  width: 0.7rem;
+  width: 1em; /* Use em unit for width to scale with font-size */
   height: 1.6rem;
   font-weight: bolder;
   font-size: 1.2rem;
+  text-align: center; /* Center the text inside the individual word boxes */
+  display: flex; /* Use flex to center content vertically and horizontally */
+  align-items: center;
+  justify-content: center;
 }
-
 
 .displayword {
   display: flex;
@@ -102,9 +112,10 @@ header >p{
   justify-content: center;
   align-items: center;
   margin-top: 1.5rem;
+  flex-wrap: wrap; /* Allow words to wrap to the next line if needed */
 }
 
-.keyboard>button{
+.keyboard > button {
   background-color: #FCBA29;
   color: #1E1E1E;
   border: 1px solid #D7D7D7;
@@ -114,6 +125,8 @@ header >p{
   border-radius: 4px;
   width: 2.5rem;
   position: relative;
+  flex-grow: 1; /* Allow buttons to grow and fill available space */
+  max-width: 4rem; /* Set a max-width for individual keys to prevent them from becoming too large */
 }
 
 .keyboard {
@@ -123,9 +136,13 @@ header >p{
   justify-content: center;
   align-items: center;
   gap: 8px;
+  width: 95%; /* Use percentage for width */
+  max-width: 400px; /* Set a max-width for the keyboard */
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.keyboard>button:disabled:before{
+.keyboard > button:disabled:before {
   content: "";
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
@@ -133,32 +150,58 @@ header >p{
   width: 100%;
   top: 0;
   left: 0;
-  border: 1px solid rgba(0, 0, 0, 0.7);;
+  border: 1px solid rgba(0, 0, 0, 0.7);
   border-radius: 4px;
 }
 
 span.chip.lost::before {
-    content: "💀";
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    font-size: 0.85rem;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+  content: "💀";
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 0.85rem;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 #newgame {
   background-color: #11B5E5;
   color: #1E1E1E;
-  padding: 0.8rem 5rem;
+  padding: 0.8rem 2rem; /* Adjusted padding for better fit on mobile */
   border: 1px solid #D7D7D7;
   border-radius: 4px;
   font-size: 1.1rem;
   font-weight: bold;
   margin-top: 2rem;
   font-family: inherit;
+  width: 80%; /* Use percentage for width */
+  max-width: 300px; /* Set a max-width for the button */
+  text-align: center; /* Center the text within the button */
+}
+
+/* Media Queries for fine-tuning */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8em; /* Slightly smaller font for very small screens */
+  }
+
+  .keyboard > button {
+    font-size: 0.9rem; /* Smaller font for keyboard buttons */
+    width: 2rem; /* Adjusted width for keyboard buttons */
+    padding: 0.4rem 0.6rem;
+  }
+
+  .displayword > p {
+    font-size: 1rem; /* Smaller font for individual word boxes */
+    padding: 0.5rem 0.4rem;
+  }
+
+  #newgame {
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+  }
 }
