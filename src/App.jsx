@@ -3,6 +3,7 @@ import './App.css'
 import languages from './assets/langauges'
 import {getFarewellText} from './utils.js'
 import Confetti from 'react-confetti'
+
 function App() {
 
   const[word,setWord] = useState("")
@@ -10,20 +11,18 @@ function App() {
   const[guessedwords,setguessedwords] = useState([])
   const[hintIndex, setHintIndex] = useState([]) // Add this line
   const[newgame,setnewgame] = useState(false)
-  const isGamewon = word.toUpperCase().split("").map((word)=>(
-  guessedwords.includes(word)
-  )).every(word=> word == true)
-  const wrongArr =  guessedwords.filter(wrd=>(
-      !word.toUpperCase().split("").includes(wrd)
-  ))
   const gameLost = wrongArr.length == languages.length -1
   const gameOver = gameLost || isGamewon;
   const  lastGuessedLetter = guessedwords[guessedwords.length -1]
   const lastGuessedLetterIncorrect = lastGuessedLetter && !word.toUpperCase().includes(lastGuessedLetter)
+  const isGamewon = word.length > 0 && word.toUpperCase().split("").map((letter)=>(guessedwords.includes(letter)
+  )).every(isGuessed => isGuessed === true)
+  const wrongArr =  guessedwords.filter(wrd=>(
+      !word.toUpperCase().split("").includes(wrd)
+  ))
 
    useEffect(()=>{
      const randomno = Math.floor(Math.random() * 4) + 4;
-
      fetch(`https://random-word-api.herokuapp.com/word?length=${randomno} `).then
       (response => response.json()).then
       (data => {
