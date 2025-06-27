@@ -25,7 +25,7 @@ function App() {
   const lastGuessedLetterIncorrect = lastGuessedLetter && !word.toUpperCase().includes(lastGuessedLetter)
  
     useEffect(()=>{
-     const randomno = Math.floor(Math.random() * 4) + 4;
+     const randomno = Math.floor(Math.random() * 4) + 5;
      fetch(`https://random-word-api.herokuapp.com/word?length=${randomno}`).then
       (response => response.json()).then
       (data => {
