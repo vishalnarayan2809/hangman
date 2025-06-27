@@ -3,6 +3,7 @@ import './App.css'
 import languages from './assets/langauges'
 import {getFarewellText} from './utils.js'
 import Confetti from 'react-confetti'
+import clsx from 'clsx'
 
 function App() {
 
@@ -86,7 +87,10 @@ function App() {
   function langaugechips(){
    return languages.map((language,index)=>(
         <span 
-          className={wrongArr.length <= index?"chip":"chip lost"}
+          className={clsx(
+            "chip",{
+            lost: wrongArr.length > index
+            })}
           style={{
           backgroundColor: language.backgroundColor, 
           color: language.color
