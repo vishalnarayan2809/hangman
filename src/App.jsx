@@ -9,7 +9,6 @@ function App() {
   const[word,setWord] = useState("")
   const keyletters = 'abcdefghijklmnopqrstuvwxyz'
   const[guessedwords,setguessedwords] = useState([])
-  const[hintIndex, setHintIndex] = useState([]) // Add this line
   const[newgame,setnewgame] = useState(false)
   
   const isGamewon = word.length > 0 && word.toUpperCase().split("").map((letter)=>(guessedwords.includes(letter)
@@ -23,28 +22,25 @@ function App() {
   const gameOver = gameLost || isGamewon;
   const lastGuessedLetter = guessedwords[guessedwords.length -1]
   const lastGuessedLetterIncorrect = lastGuessedLetter && !word.toUpperCase().includes(lastGuessedLetter)
-
-   useEffect(()=>{
+ 
+    useEffect(()=>{
      const randomno = Math.floor(Math.random() * 4) + 4;
-     fetch(`https://random-word-api.herokuapp.com/word?length=${randomno} `).then
+     fetch(`https://random-word-api.herokuapp.com/word?length=${randomno}`).then
       (response => response.json()).then
       (data => {
      setWord(data[0])
-     // Generate 2 unique random hint indices
-     const hintIndices = [];
-     while (hintIndices.length < 2 && data[0].length > 1) {
-       const idx = Math.floor(Math.random() * data[0].length);
-       if (!hintIndices.includes(idx)) {
-         hintIndices.push(idx);
-       }
-     }
-     setHintIndex(hintIndices);
-      const hintCharacters = hintIndices.map(index => data[0].toUpperCase().charAt(index)); 
-         setguessedwords(prev => [...prev, ...hintCharacters]); // Set random hint indices
+     const indices = []
+      while(indices.length < 2  && data[0].length > 1){
+        const rnd = Math.floor(Math.random()*data[0].length)
+        const letter = data[0].toUpperCase().charAt(rnd)
+        if(!indices.includes(letter)){
+          indices.push(letter)
+        }
+      }
+      setguessedwords(indices)
    })
-   
- 
-  },[newgame])
+   }, [newgame]);
+
 
   function addletter(letter){
       setguessedwords(prev => (
@@ -99,16 +95,13 @@ function App() {
   }
 function displayword(){
   return word.toUpperCase().split("").map((wrd,index)=>{
-    const isHintCharacter = hintIndex.includes(index);
-    const shouldShowCharacter = guessedwords.includes(wrd) || isHintCharacter;
-    
     return gameLost ? 
       <p 
         style={{color: guessedwords.includes(wrd)?"":"#EC5D49"}}    
         key={index}>{wrd}
       </p> :
       <p key={index}>
-        {shouldShowCharacter && wrd}
+        {guessedwords.includes(wrd) && wrd}
       </p>
   })
 }
@@ -126,7 +119,7 @@ function displayword(){
   }
   return (
     <>
-  {(isGamewon && gameOver )&&<Confetti/>}
+  {isGamewon &&<Confetti/>}
     <header>
     <h1>Assembly: Endgame</h1>
       <p>Guess the word in under 8 attempts to keep the programming world safe from Assembly!</p>
